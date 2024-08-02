@@ -192,7 +192,7 @@ class Icici(object):
 		if response.status_code == 200:
 			frappe.log_error("registration_status_resp",response)
 			decrypted_res = self.get_decrypted_response(response)
-			return json.dumps(json.loads(decrypted_res), indent=4, sort_keys=False)
+			return decrypted_res
 		else:
 			return json.dumps(json.loads(response.content), indent=4, sort_keys=False)
 
