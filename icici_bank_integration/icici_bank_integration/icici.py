@@ -88,7 +88,7 @@ class Icici(object):
 
 	def bank_statement_decrypted_response(self, response):
 		response = json.loads(response.content)
-		rsa_key = RSA.importKey(self.file_paths['private_key'])
+		rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		Enckey = base64.b64decode(response['encryptedKey'])
 		Deckey = cipher.decrypt(Enckey, b'x')
@@ -99,7 +99,16 @@ class Icici(object):
 		return plaintext
 
 	def get_decrypted_response(self, response):
-		rsa_key = RSA.importKey(self.file_paths['private_key'])
+		# rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		import os
+		from frappe.utils import get_files_path
+		path = get_files_path()
+		file_paths = self.file_paths['private_key'].split('/')
+		file_path = os.path.join(path, file_paths[len(file_paths)-1])
+		rsa_key = None
+		if os.path.exists(file_path):
+			f = open(file_path)
+			rsa_key = f.read()
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		try:
 			raw_cipher_data = base64.b64decode(response.content)
@@ -178,6 +187,7 @@ class Icici(object):
 		cipher_text = self.get_encrypted_request(params)
 		response = self.send_request(7, cipher_text)
 		if response.status_code == 200:
+			frappe.log_error("registration_status_resp",response)
 			decrypted_res = self.get_decrypted_response(response)
 			return json.dumps(json.loads(decrypted_res), indent=4, sort_keys=False)
 		else:
