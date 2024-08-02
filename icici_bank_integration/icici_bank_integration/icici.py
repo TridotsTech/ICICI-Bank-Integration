@@ -88,7 +88,7 @@ class Icici(object):
 
 	def bank_statement_decrypted_response(self, response):
 		response = json.loads(response.content)
-		rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		rsa_key = RSA.importKey(self.file_paths['private_key'])
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		Enckey = base64.b64decode(response['encryptedKey'])
 		Deckey = cipher.decrypt(Enckey, b'x')
@@ -99,7 +99,7 @@ class Icici(object):
 		return plaintext
 
 	def get_decrypted_response(self, response):
-		rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		rsa_key = RSA.importKey(self.file_paths['private_key'])
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		try:
 			raw_cipher_data = base64.b64decode(response.content)

@@ -12,9 +12,7 @@ frappe.ui.form.on('Bank API Integration', {
 				freeze: true,
 				callback: function(r) {
 					console.log(r.message.success)
-					if(r.message.success==false){
-						frappe.msgprint(r.message.errormessage)
-					}
+					frappe.msgprint(r.message.errormessage)
 				}
 			});
 		 })
