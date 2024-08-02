@@ -1,0 +1,194 @@
+{
+ "actions": [],
+ "autoname": "format:{bank_api_provider} - {bank_account}",
+ "creation": "2021-03-20 12:24:14.241054",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enable",
+  "bank_api_provider",
+  "column_break_3",
+  "use_sandbox",
+  "unique_id",
+  "bank_account",
+  "credentials_section",
+  "corp_id",
+  "user_id",
+  "aggr_id",
+  "aggr_name",
+  "urn",
+  "column_break_4",
+  "api_key",
+  "private_key_path",
+  "icici_public_key",
+  "transaction_details_section",
+  "enable_transaction",
+  "column_break_20",
+  "enable_password_security",
+  "transaction_password"
+ ],
+ "fields": [
+  {
+   "fieldname": "bank_api_provider",
+   "fieldtype": "Select",
+   "label": "Bank API Provider",
+   "mandatory_depends_on": "enable",
+   "options": "\nTest\nICICI"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Bank Account",
+   "mandatory_depends_on": "enable",
+   "options": "Bank Account"
+  },
+  {
+   "depends_on": "bank_api_provider",
+   "fieldname": "credentials_section",
+   "fieldtype": "Section Break",
+   "label": "Credentials"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "private_key_path",
+   "fieldtype": "Password",
+   "label": "Private Key Path",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "corp_id",
+   "fieldtype": "Data",
+   "label": "Corp ID",
+   "mandatory_depends_on": "bank_api_provider"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "user_id",
+   "fieldtype": "Data",
+   "label": "User ID",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "aggr_id",
+   "fieldtype": "Data",
+   "label": "Aggr ID",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "aggr_name",
+   "fieldtype": "Data",
+   "label": "Aggr Name",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "urn",
+   "fieldtype": "Data",
+   "label": "URN",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  },
+  {
+   "default": "0",
+   "fieldname": "use_sandbox",
+   "fieldtype": "Check",
+   "label": "Use Sandbox",
+   "mandatory_depends_on": "enable"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "enable_password_security",
+   "fieldname": "transaction_password",
+   "fieldtype": "Password",
+   "label": "Transaction Password",
+   "mandatory_depends_on": "enable_password_security",
+   "no_copy": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enable",
+   "fieldtype": "Check",
+   "label": "Enable"
+  },
+  {
+   "fieldname": "transaction_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_transaction",
+   "fieldtype": "Check",
+   "label": "Enable Transaction"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_password_security",
+   "fieldtype": "Check",
+   "label": "Enable Password Security"
+  },
+  {
+   "depends_on": "eval:doc.enable == 1 && doc.use_sandbox == 1 && doc.bank_api_provider == 'Test'",
+   "description": "This id will be used to get a response of transaction status API",
+   "fieldname": "unique_id",
+   "fieldtype": "Data",
+   "label": "Unique ID",
+   "mandatory_depends_on": "eval: doc.enable == 1 &&doc.use_sandbox == 1 && doc.bank_api_provider == 'Test'"
+  },
+  {
+   "depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)",
+   "fieldname": "icici_public_key",
+   "fieldtype": "Attach",
+   "label": "ICICI Public Key",
+   "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "make_attachments_public": 1,
+ "modified": "2024-08-02 12:25:59.472430",
+ "modified_by": "Administrator",
+ "module": "ICICI Bank Integration",
+ "name": "Bank API Integration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
