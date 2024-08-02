@@ -194,7 +194,7 @@ class Icici(object):
 			decrypted_res = self.get_decrypted_response(response)
 			return decrypted_res
 		else:
-			return json.dumps(json.loads(response.content), indent=4, sort_keys=False)
+			return json.loads(response.content)
 
 	def fetch_statement_with_pagination(self, filters):
 		params = self.config
