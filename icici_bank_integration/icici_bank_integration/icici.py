@@ -38,7 +38,6 @@ class Icici(object):
 		self.params = ''
 		self.proxy_dict = proxy_dict
 		self.get_headers()
-		frappe.log_error("file_paths",file_paths)
 		# url dict for sandbox & live
 		# add transaction with otp api endpoint - 4th index
 		# add send otp api endpoint	- 5th index
