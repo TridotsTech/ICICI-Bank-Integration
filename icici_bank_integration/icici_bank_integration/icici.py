@@ -88,7 +88,17 @@ class Icici(object):
 
 	def bank_statement_decrypted_response(self, response):
 		response = json.loads(response.content)
-		rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		# rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		import os
+		from frappe.utils import get_files_path
+		path = get_files_path()
+		file_paths = self.file_paths['private_key'].split('/')
+		file_path = os.path.join(path, file_paths[len(file_paths)-1])
+		pv_key = None
+		if os.path.exists(file_path):
+			f = open(file_path)
+			pv_key = f.read()
+		rsa_key = RSA.importKey(pv_key)
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		Enckey = base64.b64decode(response['encryptedKey'])
 		Deckey = cipher.decrypt(Enckey, b'x')
