@@ -20,6 +20,10 @@ class BankAPIIntegration(Document):
 def check_registration_status(bank_account):
 	prov, config = get_api_provider_class(bank_account)
 	res = prov.registration_status()
+	if res.get("response"):
+		return {"errormessage":res.get("errormessage")}
+	if res.get("ResponseCode"):
+		return {"errormessage":res.get("RESPONSE")}
 	return res
 	# frappe.log_error("res",res)
 
