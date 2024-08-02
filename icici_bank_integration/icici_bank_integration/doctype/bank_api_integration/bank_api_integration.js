@@ -15,7 +15,20 @@ frappe.ui.form.on('Bank API Integration', {
 					frappe.msgprint(r.message.errormessage)
 				}
 			});
-		 })
+		 });
+		  frm.add_custom_button(__('Generate Statement'), () =>{
+		 	frappe.call({
+			method: 'icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.fetch_account_statement',
+			args: {
+				"bank_account":frm.doc.bank_account
+				},
+				freeze: true,
+				callback: function(r) {
+					frappe.msgprint("Statement successfully generated.")
+				}
+			});
+		 });
+		 
 
 	},
 	onload: function(frm) {
