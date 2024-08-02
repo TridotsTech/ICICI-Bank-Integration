@@ -117,7 +117,8 @@ class Icici(object):
 		except:
 			raise Exception(f"Invalid Response {response.content}")
 		decrypted_res = cipher.decrypt(raw_cipher_data, b'x')
-		decrypted_res = decrypted_res.decode("utf-8") 
+		decrypted_res = decrypted_res.decode("utf-8")
+		frappe.log_error("json_resp",json.loads(decrypted_res))
 		return json.loads(decrypted_res)
 
 	def get_encrypted_request(self, params):
