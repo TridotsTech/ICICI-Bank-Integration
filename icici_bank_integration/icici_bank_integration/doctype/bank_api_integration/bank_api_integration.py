@@ -341,6 +341,7 @@ def fetch_account_statement(bank_account = None):
 		}
 		try:
 			res = prov.fetch_statement_with_pagination(filters)
+			frappe.log_error("statement_res",res)
 			doc = frappe.get_doc('Bank Account', acc)
 			if res['status'] == 'SUCCESS':
 				transaction_list = []
