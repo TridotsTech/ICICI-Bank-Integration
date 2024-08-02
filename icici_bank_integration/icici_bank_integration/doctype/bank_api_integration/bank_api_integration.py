@@ -20,7 +20,8 @@ class BankAPIIntegration(Document):
 def check_registration_status(bank_account):
 	prov, config = get_api_provider_class(bank_account)
 	res = prov.registration_status()
-	frappe.log_error("res",res)
+	return json.loads(res)
+	# frappe.log_error("res",res)
 
 def initiate_transaction_with_otp(docname, otp):
 	doc = frappe.get_doc('Outward Bank Payment', docname)

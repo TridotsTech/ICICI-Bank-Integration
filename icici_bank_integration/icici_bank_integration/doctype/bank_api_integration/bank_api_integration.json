@@ -30,11 +30,13 @@
  ],
  "fields": [
   {
+   "default": "ICICI",
    "fieldname": "bank_api_provider",
    "fieldtype": "Select",
    "label": "Bank API Provider",
    "mandatory_depends_on": "enable",
-   "options": "\nTest\nICICI"
+   "options": "ICICI\nTest",
+   "read_only": 1
   },
   {
    "fieldname": "bank_account",
@@ -169,7 +171,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2024-08-02 12:25:59.472430",
+ "modified": "2024-08-02 13:10:41.022556",
  "modified_by": "Administrator",
  "module": "ICICI Bank Integration",
  "name": "Bank API Integration",
