@@ -109,6 +109,7 @@ class Icici(object):
 		if os.path.exists(file_path):
 			f = open(file_path)
 			rsa_key = f.read()
+		frappe.log_error("rsa_key",rsa_key)
 		cipher = Cipher_PKCS1_v1_5.new(rsa_key)
 		try:
 			raw_cipher_data = base64.b64decode(response.content)
