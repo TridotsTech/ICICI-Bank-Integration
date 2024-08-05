@@ -149,6 +149,9 @@ class Icici(object):
 		return cipher_text
 
 	def send_request(self, url_id, cipher_text):
+		frappe.log_error("url",self.urls[url_id])
+		frappe.log_error("headers",self.headers)
+		frappe.log_error("cipher_text",cipher_text)
 		if self.proxy_dict:
 			response = requests.request("POST", self.urls[url_id], headers=self.headers, data=cipher_text, proxies=self.proxy_dict)
 		else:
