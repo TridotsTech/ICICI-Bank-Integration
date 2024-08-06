@@ -33,7 +33,11 @@ app_license = "MIT"
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-
+doctype_js = {
+    "Bank Account": "bank_api_integration/utils/js/bank_account.js",
+	"Purchase Invoice" : "bank_api_integration/custom/js/purchase_invoice.js",
+	"Purchase Order" : "bank_api_integration/custom/js/purchase_order.js"
+}
 # Home Pages
 # ----------
 
