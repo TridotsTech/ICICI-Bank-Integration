@@ -84,15 +84,39 @@ frappe.ui.form.on('Outward Bank Payment', {
 					   let data = r.message;
 					   if (data) {
 						if (data.is_otp_enabled && !data.is_pwd_security_enabled){
-							dialog_fields = [
-								{
-									fieldtype: "Int",
-									label: __("OTP"),
-									fieldname: "otp",
-									reqd: 1
+							// dialog_fields = [
+							// 	{
+							// 		fieldtype: "Int",
+							// 		label: __("OTP"),
+							// 		fieldname: "otp",
+							// 		reqd: 1
+							// 	}
+							// ]
+							// show_dialog(frm, dialog_fields)
+							frappe.call({
+							method: 'icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.send_otp',
+							freeze: true,
+							args: {
+								'doctype': 'Outward Bank Payment',
+								'docname': frm.doc.name
+							},
+							callback: function(r) {
+								if(r.message == true){
+									frappe.show_alert({message:__('OTP Sent Successfully'), indicator:'green'});
+									dialog_fields = [
+											{
+												fieldtype: "Int",
+												label: __("OTP"),
+												fieldname: "otp",
+												reqd: 1
+											}
+										]
+									show_dialog(frm, dialog_fields)
 								}
-							]
-							show_dialog(frm, dialog_fields)
+							else{
+								frappe.show_alert({message:__('Unable to send OTP'), indicator:'red'});
+							}
+							}})
 						}
 						if (!data.is_otp_enabled && data.is_pwd_security_enabled){
 							dialog_fields = [
