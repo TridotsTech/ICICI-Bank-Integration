@@ -35,7 +35,7 @@ class Icici(object):
 		self.config = config
 		self.file_paths = file_paths
 		self.site_path = site_path
-		self.base_url = config.get("BASE_URL")
+		self.base_url = config.pop("BASE_URL")
 		self.params = ''
 		self.proxy_dict = proxy_dict
 		self.get_headers()
