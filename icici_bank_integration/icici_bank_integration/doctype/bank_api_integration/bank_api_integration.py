@@ -133,6 +133,7 @@ def initiate_transaction_without_otp(docname):
 			workflow_state = 'Initiation Error'
 	except:
 		workflow_state = 'Initiation Error'
+		frappe.log_error(title="error response",message=res)
 		res = frappe.get_traceback()
 	log_name = log_request(doc.name, 'Initiate Transaction without OTP', filters, config, res)
 	if workflow_state:
