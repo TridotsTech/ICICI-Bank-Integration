@@ -26,6 +26,8 @@ def check_registration_status(bank_account):
 		return {"errormessage":res.get("RESPONSE")}
 	if res.get("ErrorCode"):
 		return {"errormessage":res.get("Message")}
+	if res.get("Response"):
+		return {"errormessage":res.get("Message")}
 	return res
 	# frappe.log_error("res",res)
 
