@@ -8,6 +8,7 @@
  "field_order": [
   "enable",
   "bank_api_provider",
+  "base_url",
   "column_break_3",
   "use_sandbox",
   "unique_id",
@@ -166,12 +167,18 @@
    "fieldtype": "Attach",
    "label": "ICICI Public Key",
    "mandatory_depends_on": "eval:in_list([\"ICICI\"], doc.bank_api_provider)"
+  },
+  {
+   "fieldname": "base_url",
+   "fieldtype": "Small Text",
+   "label": "Base URL",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2024-08-02 15:32:20.326135",
+ "modified": "2024-08-07 15:39:47.548526",
  "modified_by": "Administrator",
  "module": "ICICI Bank Integration",
  "name": "Bank API Integration",

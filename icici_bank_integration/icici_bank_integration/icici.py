@@ -35,6 +35,7 @@ class Icici(object):
 		self.config = config
 		self.file_paths = file_paths
 		self.site_path = site_path
+		self.base_url = config.get("BASE_URL")
 		self.params = ''
 		self.proxy_dict = proxy_dict
 		self.get_headers()
@@ -42,28 +43,38 @@ class Icici(object):
 		# add transaction with otp api endpoint - 4th index
 		# add send otp api endpoint	- 5th index
 		# add account statement pagination api endpoint - 6th index
-		if use_sandbox:
-			self.urls =  [
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/BalanceInquiry',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/Transaction',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/TransactionInquiry',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/TransactionOTP',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/Create',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
-				'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/RegistrationStatus'
-				]
-		else:
-			self.urls = [
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/BalanceInquiry',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/Transaction',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/TransactionInquiry',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/TransactionOTP',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/Create',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
-				'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/RegistrationStatus'
-				]
+		# if use_sandbox:
+		# 	self.urls =  [
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/BalanceInquiry',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/Transaction',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/TransactionInquiry',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/TransactionOTP',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/Create',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
+		# 		'https://apibankingonesandbox.icicibank.com/api/Corporate/CIB/v1/RegistrationStatus'
+		# 		]
+		# else:
+		# 	self.urls = [
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/BalanceInquiry',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/Transaction',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/TransactionInquiry',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/TransactionOTP',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/Create',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/AccountStatement',
+		# 		'https://apibankingone.icicibank.com/api/Corporate/CIB/v1/RegistrationStatus'
+		# 		]
+		self.urls =  [
+			'BalanceInquiry',
+			'AccountStatement',
+			'Transaction',
+			'TransactionInquiry',
+			'TransactionOTP',
+			'Create',
+			'AccountStatement',
+			'RegistrationStatus'
+			]
 
 	def get_headers(self):
 		headers = {}
@@ -109,6 +120,7 @@ class Icici(object):
 
 	def get_decrypted_response(self, response):
 		# rsa_key = RSA.importKey(open(self.file_paths['private_key'], "rb").read())
+		
 		import os
 		from frappe.utils import get_files_path
 		path = get_files_path()
@@ -153,9 +165,9 @@ class Icici(object):
 		frappe.log_error("headers",self.headers)
 		frappe.log_error("cipher_text",cipher_text)
 		if self.proxy_dict:
-			response = requests.request("POST", self.urls[url_id], headers=self.headers, data=cipher_text, proxies=self.proxy_dict)
+			response = requests.request("POST", self.base_url+self.urls[url_id], headers=self.headers, data=cipher_text, proxies=self.proxy_dict)
 		else:
-			response = requests.request("POST", self.urls[url_id], headers=self.headers, data=cipher_text)
+			response = requests.request("POST", self.base_url+self.urls[url_id], headers=self.headers, data=cipher_text)
 		return response
 
 
