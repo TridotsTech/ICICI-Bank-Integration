@@ -34,12 +34,13 @@ app_license = "MIT"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 doctype_js = {
-    "Bank Account": "bank_api_integration/utils/js/bank_account.js",
-	"Purchase Invoice" : "bank_api_integration/custom/js/purchase_invoice.js",
-	"Purchase Order" : "bank_api_integration/custom/js/purchase_order.js"
+    "Bank Account": "icici_bank_integration/utils/js/bank_account.js",
+	"Purchase Invoice" : "icici_bank_integration/custom/js/purchase_invoice.js",
+	"Purchase Order" : "icici_bank_integration/custom/js/purchase_order.js"
 }
 # Home Pages
 # ----------
+
 
 # application home page (will override Website Settings)
 # home_page = "login"
