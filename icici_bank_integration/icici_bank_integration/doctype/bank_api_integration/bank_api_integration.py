@@ -48,7 +48,7 @@ def initiate_transaction_with_otp(docname, otp):
 				'party': doc.party,
 				'is_default': 1
 				},'ifsc_code'),
-		"AMOUNT": round(doc.amount,2),
+		"AMOUNT": float("{:.2f}".format(doc.amount)),
 		"CURRENCY": currency,
 		"TXNTYPE": doc.transaction_type,
 		"PAYEENAME": doc.party,
