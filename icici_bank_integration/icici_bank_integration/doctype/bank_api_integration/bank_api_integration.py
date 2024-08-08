@@ -52,6 +52,7 @@ def initiate_transaction_with_otp(docname, otp):
 		"CURRENCY": currency,
 		"TXNTYPE": doc.transaction_type,
 		"PAYEENAME": doc.party,
+		"WORKFLOW_REQD":"NO",
 		"DEBITACC": frappe.db.get_value('Bank Account', 
 					{
 					'name': doc.company_bank_account
