@@ -39,7 +39,7 @@ def initiate_transaction_with_otp(docname, otp):
 	currency = frappe.db.get_value("Company", doc.company, "default_currency")
 	prov, config = get_api_provider_class(doc.company_bank_account)
 	filters = {
-		"CUSTOMERINDUCED": "N",
+		"CUSTOMERINDUCED": "Y",
 		"REMARKS": doc.remarks,
 		"OTP": otp,
 		"UNIQUEID": doc.name,
