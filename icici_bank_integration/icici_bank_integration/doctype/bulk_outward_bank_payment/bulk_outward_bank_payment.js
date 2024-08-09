@@ -90,7 +90,7 @@ frappe.ui.form.on("Bulk Outward Bank Payment", {
 							method: 'icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.send_otp',
 							freeze: true,
 							args: {
-								'doctype': 'Outward Bank Payment',
+								'doctype': 'Bulk Outward Bank Payment',
 								'docname': frm.doc.name
 							},
 							callback: function(r) {
