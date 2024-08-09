@@ -37,8 +37,10 @@ class Icici(object):
 		self.site_path = site_path
 		if use_sandbox:
 			self.base_url = config.pop("SANDBOX_BASE_URL")
+			config.pop("PRODUCTION_BASE_URL")
 		else:
 			self.base_url = config.pop("PRODUCTION_BASE_URL")
+			config.pop("SANDBOX_BASE_URL")
 		self.params = ''
 		self.proxy_dict = proxy_dict
 		self.get_headers()
