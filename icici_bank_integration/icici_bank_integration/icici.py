@@ -35,7 +35,10 @@ class Icici(object):
 		self.config = config
 		self.file_paths = file_paths
 		self.site_path = site_path
-		self.base_url = config.pop("BASE_URL")
+		if use_sandbox:
+			self.base_url = config.pop("SANDBOX_BASE_URL")
+		else:
+			self.base_url = config.pop("PRODUCTION_BASE_URL")
 		self.params = ''
 		self.proxy_dict = proxy_dict
 		self.get_headers()

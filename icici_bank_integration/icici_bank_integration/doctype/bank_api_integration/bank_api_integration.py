@@ -260,7 +260,8 @@ def get_api_provider_class(company_bank_account):
 			"USERID": integration_doc.user_id,
 			"AGGRID":integration_doc.aggr_id,
 			"AGGRNAME":integration_doc.aggr_name,
-			"BASE_URL":integration_doc.base_url,
+			"SANDBOX_BASE_URL":integration_doc.sandbox_base_url,
+			"PRODUCTION_BASE_URL":integration_doc.production_base_url,
 			"URN": integration_doc.urn}
 	
 	file_paths = {'private_key': integration_doc.get_password(fieldname="private_key_path") if integration_doc.private_key_path else None,
