@@ -1,25 +1,30 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from . import __version__ as app_version
 
 app_name = "icici_bank_integration"
 app_title = "ICICI Bank Integration"
 app_publisher = "Tridotstech PVT LTD"
 app_description = "ICICI Bank Integration"
+app_icon = "octicon octicon-file-directory"
+app_color = "grey"
 app_email = "info@tridotstech.com"
 app_license = "MIT"
+
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/icici_bank_integration/css/icici_bank_integration.css"
-# app_include_js = "/assets/icici_bank_integration/js/icici_bank_integration.js"
+# app_include_css = "/assets/bank_api_integration/css/bank_api_integration.css"
+# app_include_js = "/assets/bank_api_integration/js/bank_api_integration.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/icici_bank_integration/css/icici_bank_integration.css"
-# web_include_js = "/assets/icici_bank_integration/js/icici_bank_integration.js"
+# web_include_css = "/assets/bank_api_integration/css/bank_api_integration.css"
+# web_include_js = "/assets/bank_api_integration/js/bank_api_integration.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "icici_bank_integration/public/scss/website"
+# website_theme_scss = "bank_api_integration/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -33,14 +38,9 @@ app_license = "MIT"
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-doctype_js = {
-    "Bank Account": "icici_bank_integration/utils/js/bank_account.js",
-	"Purchase Invoice" : "icici_bank_integration/custom/js/purchase_invoice.js",
-	"Purchase Order" : "icici_bank_integration/custom/js/purchase_order.js"
-}
+
 # Home Pages
 # ----------
-
 
 # application home page (will override Website Settings)
 # home_page = "login"
@@ -56,59 +56,28 @@ doctype_js = {
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
 
-# Jinja
-# ----------
-
-# add methods and filters to jinja environment
-# jinja = {
-#	"methods": "icici_bank_integration.utils.jinja_methods",
-#	"filters": "icici_bank_integration.utils.jinja_filters"
-# }
-
 # Installation
 # ------------
 
-# before_install = "icici_bank_integration.install.before_install"
-# after_install = "icici_bank_integration.install.after_install"
-
-# Uninstallation
-# ------------
-
-# before_uninstall = "icici_bank_integration.uninstall.before_uninstall"
-# after_uninstall = "icici_bank_integration.uninstall.after_uninstall"
-
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "icici_bank_integration.utils.before_app_install"
-# after_app_install = "icici_bank_integration.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "icici_bank_integration.utils.before_app_uninstall"
-# after_app_uninstall = "icici_bank_integration.utils.after_app_uninstall"
+# before_install = "bank_api_integration.install.before_install"
+after_install = "icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.create_defaults"
 
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "icici_bank_integration.notifications.get_notification_config"
+# notification_config = "bank_api_integration.notifications.get_notification_config"
 
 # Permissions
 # -----------
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-#	"Event": "frappe.desk.doctype.event.event.has_permission",
+# 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -116,7 +85,7 @@ doctype_js = {
 # Override standard doctype classes
 
 # override_doctype_class = {
-#	"ToDo": "custom_app.overrides.CustomToDo"
+# 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
 # Document Events
@@ -124,99 +93,66 @@ doctype_js = {
 # Hook on document methods and events
 
 # doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
+# 	"*": {
+# 		"on_update": "method",
+# 		"on_cancel": "method",
+# 		"on_trash": "method"
 #	}
 # }
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-#	"all": [
-#		"icici_bank_integration.tasks.all"
-#	],
-#	"daily": [
-#		"icici_bank_integration.tasks.daily"
-#	],
-#	"hourly": [
-#		"icici_bank_integration.tasks.hourly"
-#	],
-#	"weekly": [
-#		"icici_bank_integration.tasks.weekly"
-#	],
-#	"monthly": [
-#		"icici_bank_integration.tasks.monthly"
-#	],
+scheduler_events = {
+	"cron": {
+		"0/30 * * * *": [
+		"icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.update_transaction_status",
+		"icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.fetch_balance",
+		"icici_bank_integration.icici_bank_integration.doctype.bank_api_integration.bank_api_integration.fetch_account_statement"
+		]
+	}
+}
+# 	"all": [
+# 		"bank_api_integration.tasks.all"
+# 	],
+# 	"daily": [
+# 		"bank_api_integration.tasks.daily"
+# 	],
+# 	"hourly": [
+# 		"bank_api_integration.tasks.hourly"
+# 	],
+# 	"weekly": [
+# 		"bank_api_integration.tasks.weekly"
+# 	]
+# 	"monthly": [
+# 		"bank_api_integration.tasks.monthly"
+# 	]
 # }
 
 # Testing
 # -------
 
-# before_tests = "icici_bank_integration.install.before_tests"
+# before_tests = "bank_api_integration.install.before_tests"
 
 # Overriding Methods
 # ------------------------------
 #
 # override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "icici_bank_integration.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "bank_api_integration.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-#	"Task": "icici_bank_integration.task.get_dashboard_data"
+# 	"Task": "bank_api_integration.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
-
-# Ignore links to specified DocTypes when deleting documents
-# -----------------------------------------------------------
-
-# ignore_links_on_delete = ["Communication", "ToDo"]
-
-# Request Events
-# ----------------
-# before_request = ["icici_bank_integration.utils.before_request"]
-# after_request = ["icici_bank_integration.utils.after_request"]
-
-# Job Events
-# ----------
-# before_job = ["icici_bank_integration.utils.before_job"]
-# after_job = ["icici_bank_integration.utils.after_job"]
-
-# User Data Protection
-# --------------------
-
-# user_data_fields = [
-#	{
-#		"doctype": "{doctype_1}",
-#		"filter_by": "{filter_by}",
-#		"redact_fields": ["{field_1}", "{field_2}"],
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_2}",
-#		"filter_by": "{filter_by}",
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_3}",
-#		"strict": False,
-#	},
-#	{
-#		"doctype": "{doctype_4}"
-#	}
-# ]
-
-# Authentication and authorization
-# --------------------------------
-
-# auth_hooks = [
-#	"icici_bank_integration.auth.validate"
-# ]
+doctype_js = {
+    "Bank Account": "icici_bank_integration/utils/js/bank_account.js",
+	"Purchase Invoice" : "icici_bank_integration/custom/js/purchase_invoice.js",
+	"Purchase Order" : "icici_bank_integration/custom/js/purchase_order.js"
+}
