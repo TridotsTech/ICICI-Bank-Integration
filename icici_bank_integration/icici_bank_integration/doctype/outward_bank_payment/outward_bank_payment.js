@@ -18,6 +18,37 @@ frappe.ui.form.on('Outward Bank Payment', {
 			frm.add_custom_button(__("Update Transaction Status"), function() {
 			 frm.trigger('update_txn_status');
 		 }).addClass("btn-primary");}
+
+		 
+	},
+	party_type:function(frm){
+		if(frm.doc.party_type){
+			frappe.call({
+				   method: 'icici_bank_integration.icici_bank_integration.doctype.outward_bank_payment.outward_bank_payment.get_filtered_parties',
+				   freeze: true,
+				   args: {
+					   'party_type': frm.doc.party_type
+				   },
+				   callback: function(r) {
+				   	var parties = [];
+				   	if(r.message){
+				   		for(var i=0;i<r.message.length;i++){
+				   			parties.push(r.message[i].name)
+				   		}
+				   		frm.set_query("party", function() {
+				   			console.log(parties)
+							return {
+								"filters":{
+									 "name":["in",parties]
+								},
+							};
+						});
+				   	}
+				   	
+				   }
+				});
+		}
+		
 	},
 	before_workflow_action: function(frm){
 		if(frm.selected_workflow_action == 'Reject'){

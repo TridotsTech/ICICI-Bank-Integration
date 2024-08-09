@@ -252,3 +252,22 @@ def get_outstanding_reference_documents(args):
 			.format(args.get("party_type").lower(), frappe.bold(args.get("party"))))
 
 	return data
+
+@frappe.whitelist()
+def get_filtered_parties(party_type):
+	condition = ""
+	if party_type:
+		condition += " AND BA.party_type='"+party_type+"'"
+	query = f""" 
+								SELECT D.name 
+									FROM `tabBank Account` BA
+								INNER JOIN `tab{party_type}` D
+									ON D.name = BA.party
+								WHERE 
+									BA.bank_account_no IS NOT NULL 
+									AND BA.ifsc_code IS NOT NULL 
+									AND BA.is_company_account=0
+									 {condition}
+							"""
+	frappe.log_error("query",query)
+	return frappe.db.sql(query,as_dict=1)
